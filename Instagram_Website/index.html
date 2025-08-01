@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FILM 260 — Instagram-Themed Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ig-1: #feda75; --ig-2: #fa7e1e; --ig-3: #d62976; --ig-4: #962fbf; --ig-5: #4f5bd5;
+      --bg: #0b0b0f; --panel:#0f1016; --card:#111218; --muted:#a7a7ad; --text:#f5f6f8; --like:#ed4956; --border:#262736;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 1200px at 80% -10%,var(--ig-5),transparent 60%),radial-gradient(1000px 800px at -10% 110%,var(--ig-2),transparent 60%),var(--bg);color:var(--text);font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+    /* App shell */
+    .app{max-width:980px;margin:0 auto;min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+    header{position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);background:rgba(10,10,16,.6);border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:10px 14px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .wordmark{font-family:'Pacifico',cursive;font-size:26px;letter-spacing:.3px;background:linear-gradient(90deg,var(--ig-1),var(--ig-2),var(--ig-3),var(--ig-4),var(--ig-5));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .search{justify-self:center;width:42%; position:relative;}
+    .search input{width:100%;background:#0f1016;border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:10px;outline:none}
+    /* Search results dropdown */
+    .results{position:absolute;top:44px;left:0;width:100%;background:#0f1016;border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:6px;max-height:260px;overflow:auto}
+    .result-item{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border-radius:10px;background:transparent;border:0;color:#e8e9f0;text-align:left;cursor:pointer}
+    .result-item:hover,.result-item[aria-selected="true"]{background:#151621}
+    .result-title{font-size:14px;font-weight:600}
+    .result-sub{font-size:12px;color:#b6b7c0}
+    .result-empty{padding:8px 10px;color:#b6b7c0;font-size:13px}
+
+    .icons{justify-self:end;display:flex;gap:14px}
+    .icon-btn{background:transparent;border:0;cursor:pointer;padding:6px}
+    .icon{width:22px;height:22px;fill:none;stroke:#e6e6ea;stroke-width:2}
+
+    /* Stories */
+    .stories{display:flex;gap:12px;padding:12px 16px;overflow-x:auto;border-bottom:1px solid var(--border);background:#0c0d14}
+    .story{width:72px;text-align:center;font-size:12px;color:#c9c9d2;background:transparent;border:0;cursor:pointer}
+    .ring{width:64px;height:64px;margin:0 auto 6px;border-radius:50%;padding:3px;background:conic-gradient(var(--ig-1),var(--ig-2),var(--ig-3),var(--ig-4),var(--ig-5),var(--ig-1))}
+    .ring img{width:100%;height:100%;border-radius:50%;display:block;border:2px solid #0c0d14;object-fit:cover}
+
+    /* Progress bar */
+    .progress{position:sticky;top:58px;z-index:19;height:3px;background:#0c0d14;border-bottom:1px solid var(--border)}
+    .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--ig-3),var(--ig-4),var(--ig-5))}
+
+    /* Pages */
+    main{position:relative}
+    .page{min-height:calc(100vh - 160px);display:grid;grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:16px;padding:16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+
+    .cover{place-items:center;text-align:center;padding:10vh 16px;border:0;background:radial-gradient(800px 500px at 20% 0%,rgba(255,255,255,.06),transparent 60%),linear-gradient(135deg,var(--ig-5),var(--ig-4) 30%,var(--ig-3) 55%,var(--ig-2) 80%,var(--ig-1));color:#fff}
+    .cover h1{font-family:'Pacifico',cursive;font-size:clamp(48px,8vw,86px);margin:0 0 10px}
+    .cover h2{font-size:clamp(16px,2.5vw,24px);font-weight:400;opacity:.95;margin:0 0 24px}
+    .cta .btn{appearance:none;border:0;cursor:pointer;color:#fff;font-weight:600;padding:12px 18px;border-radius:12px;font-size:16px;background:linear-gradient(90deg,var(--ig-1),var(--ig-2),var(--ig-3),var(--ig-4),var(--ig-5));box-shadow:0 8px 28px rgba(214,44,121,.35)}
+
+    /* Post card */
+    .post{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 6px 28px rgba(0,0,0,.25); transition: box-shadow .3s ease;}
+    .post.glow{box-shadow:0 0 0 2px rgba(214,44,121,.6), 0 8px 28px rgba(214,44,121,.35)}
+    .post .post-head{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--border);background:#0f1016}
+    .avatar{width:36px;height:36px;border-radius:50%;background:#222;flex:0 0 auto}
+    .meta{display:flex;flex-direction:column;line-height:1.2}
+    .meta .title{font-weight:600}
+    .meta .sub{font-size:12px;color:#b4b6be}
+
+    figure{margin:0;height:min(56vh,520px);background:#0b0c12;position:relative}
+    figure img{width:100%;height:100%;object-fit:cover;display:block}
+    .dbl-like{position:absolute;inset:0;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s ease}
+    .dbl-like svg{width:140px;height:140px;fill:var(--like);filter:drop-shadow(0 10px 30px rgba(237,73,86,.4))}
+
+    .body{padding:12px 14px 6px;color:#dfe0e7}
+    .body h3{margin:0 0 6px;font-size:18px}
+    .placeholder{color:#9ea1ac;font-size:14px}
+    .content-slot{border:1px dashed #3a3b4a;border-radius:10px;padding:10px;margin-top:8px;background:#0f1016}
+    .content-slot p{margin:.5em 0}
+
+    .actions{display:flex;align-items:center;gap:14px;padding:10px 12px 14px}
+    .heart,.bookmark,.share{width:28px;height:28px;cursor:pointer;position:relative;background:transparent;border:0}
+    .heart svg,.bookmark svg,.share svg{width:100%;height:100%;transition:transform .2s ease}
+    .heart.liked svg{transform:scale(1.15)}
+    .fill{fill:none;stroke:#e6e6ea;stroke-width:2.2}
+    .heart.liked .fill{fill:var(--like);stroke:var(--like)}
+    .bookmark.saved .fill{fill:#fff;stroke:#fff}
+    .count{font-size:14px;color:#c8c9d3}
+
+    .pager{display:flex;justify-content:space-between;padding:8px 6px 12px}
+    .btn-link{color:#fff;text-decoration:none;font-weight:600;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:#111218}
+    .btn-link.primary{border:0;background:linear-gradient(90deg,var(--ig-3),var(--ig-4),var(--ig-5))}
+
+    footer.nav{position:sticky;bottom:0;z-index:20;background:rgba(10,10,16,.85);border-top:1px solid var(--border);display:flex;gap:22px;justify-content:center;padding:10px 12px}
+    .nav-btn{background:transparent;border:0;cursor:pointer}
+    .nav-btn.active .icon{stroke:url(#igGrad)}
+
+    /* Toast */
+    .toast{position:fixed;bottom:18px;right:18px;background:#111218;border:1px solid var(--border);color:#fff;padding:10px 14px;border-radius:12px;opacity:0;transform:translateY(8px);transition:all .25s ease;pointer-events:none}
+    .toast.show{opacity:1;transform:translateY(0)}
+
+    @media (max-width:720px){.search{display:none}figure{height:min(50vh,380px)}}
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <linearGradient id="igGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d62976"/><stop offset="50%" stop-color="#962fbf"/><stop offset="100%" stop-color="#4f5bd5"/>
+    </linearGradient>
+  </svg>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="7" r="2" stroke="#e6e6ea"/><circle cx="17" cy="7" r="2" stroke="#e6e6ea"/><circle cx="7" cy="17" r="2" stroke="#e6e6ea"/><circle cx="17" cy="17" r="2" stroke="#e6e6ea"/></svg>
+        <div class="wordmark">Instastudy</div>
+      </div>
+      <div class="search">
+        <input id="searchInput" placeholder="Search sections…" aria-label="Search sections" autocomplete="off"/>
+        <div id="searchResults" class="results" role="listbox" hidden></div>
+      </div>
+      <div class="icons">
+        <button class="icon-btn" title="Notifications" aria-label="Notifications"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2Zm6-6V11a6 6 0 0 0-5-5.9V4a1 1 0 1 0-2 0v1.1A6 6 0 0 0 6 11v5l-2 2v1h16v-1l-2-2Z"/></svg></button>
+        <button class="icon-btn" title="Direct" aria-label="Direct messages"><svg class="icon" viewBox="0 0 24 24"><path d="M21 3 3 10l7 2 2 7 9-16Z"/></svg></button>
+      </div>
+    </header>
+
+    <div class="stories" aria-label="Sections">
+      <button class="story" data-goto="#intro"><div class="ring"><img alt="Intro" src="Assets/intro.jpg"/></div>intro</button>
+      <button class="story" data-goto="#filters"><div class="ring"><img alt="Filters" src="Assets/filters.jpg"/></div>filters</button>
+      <button class="story" data-goto="#algorithmic"><div class="ring"><img alt="Algorithm" src="Assets/algorithmic.jpg"/></div>algorithm</button>
+      <button class="story" data-goto="#feedback"><div class="ring"><img alt="Feedback" src="Assets/feedback.jpg"/></div>feedback</button>
+      <button class="story" data-goto="#psych"><div class="ring"><img alt="Psych" src="Assets/psyc.jpg"/></div>psych</button>
+      <button class="story" data-goto="#conclusion"><div class="ring"><img alt="Conclusion" src="Assets/conclusion.jpg"/></div>conclusion</button>
+    </div>
+
+    <div class="progress" aria-hidden="true"><div class="bar" id="progressBar"></div></div>
+
+    <main id="pages" tabindex="-1">
+      <!-- 0) COVER PAGE -->
+      <section id="cover" class="page cover" data-index="0" role="region" aria-label="Cover">
+        <div>
+          <h1>Hamza Aheed</h1>
+          <h2>FILM 260 Assignment</h2>
+          <p style="max-width:680px;margin:0 auto;opacity:.92">Hamza Aheed logging into Film 260</p>
+          <div class="cta"><button class="btn" data-next>Login..</button></div>
+        </div>
+      </section>
+
+      <!-- 1) INTRODUCTION -->
+      <section id="intro" class="page" data-index="1" role="region" aria-label="Introduction">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-2),var(--ig-4));"></div>
+            <div class="meta"><span class="title">1) Introduction</span><span class="sub">#identity #socialmedia</span></div>
+          </div>
+          <figure data-like-surface>
+            <img alt="Colorful social feed on phone" src="Assets/intro.jpg" />
+            <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Introduction</h3>
+            <div class="content-slot" id="content-intro">
+              <p>In the digital age, today Instagram has created a strong influence among users. It has heavily affected self-image and self-identity through the algorithmic content curation and beauty filters based on idealized norms (Evens et al.). Beauty filters are known to alter the appearance of the individual instantly (Isakowitsch). At the same time, the algorithm amplifies the comparison and pushes surface appearance-focused content, which ultimately rewards externally validated presentation (Creedon and Wackwitz). Mental health-related issues in teenagers and young adults are increasing significantly, especially regarding the image of self, and some studies note that the usage of adult Instagram filters is responsible for these issues escalating (Lukoševičiūtė-Barauskienė et al.). This essay specifically considers Instagram's algorithm and filters to highlight how the self-perception of individuals is being affected due to unrealistic beauty ideals, external validation requirements, and intensifying social comparison. The arguments discussed in this essay can be categorized into three themes: (1) filters encourage internalization of appearance ideals and degrade body esteem, (2) algorithmic feed dynamics amplify social comparison and narrow identity, and (3) feedback loops reinforce external validation over intrinsic self-worth.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="intro"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></button>
+            <span class="count" data-count="intro">0 likes</span>
+            <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
+            <button class="bookmark" data-bookmark="intro" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
+          </div>
+          <div class="pager"><span></span><a class="btn-link primary" href="#filters" data-next>Next: Filters →</a></div>
+        </article>
+      </section>
+
+      <!-- 2) FILTERS & BODY ESTEEM -->
+      <section id="filters" class="page" data-index="2" role="region" aria-label="Filters & Body Esteem">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-1),var(--ig-3));"></div>
+            <div class="meta"><span class="title">2) Filters Encourage Internalization of Appearance Ideals</span><span class="sub">#filters #beautyideals</span></div>
+          </div>
+          <figure data-like-surface>
+            <img alt="Mirror selfie flash" src="Assets/filters.jpg" />
+            <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Filters Encourage Internalization of Appearance Ideals and Degrade Body Esteem</h3>
+            <div class="content-slot" id="content-filters">
+              <p>Social media platforms were initially created as an unconventional mode of self-representation and a mode of establishing social connections, which could have been done in a highly conducive way (Sándor). However, this quickly changed at social media became a platform that primarily displayed a specific body size and type, and promoted it as a norm, which negatively impacted several individuals in several ways. Beauty filters have evolved into more than just playful tools; they have become an integral cultivator of internalization of narrow appearance ideals (Castillo-Hermosilla et al.). This particularly targets individuals with low self-esteem and high fear of negative feedback, which is why these susceptible individuals rely heavily on filters. This has also given rise to editing behaviors, which are fueled by appearance comparisons, which ultimately lead to self-objectification and erode the self-esteem of the individual (Ozimek et al.). A study conducted has shown that female students are more likely to be influenced by high-frequency Instagram filters due to the beauty-themed accounts they follow (Mancin et al.). This shows that these individuals displayed a stronger tendency towards the comparison of physical appearance and showed that internalized attractiveness norms have become more common among the beauty-themed accounts as opposed to non-users. Beauty-related accounts on Instagram have been using more beauty filters and, therefore, are affecting the way individuals see themselves (Smith et al.). Another study conducted has shown that the usage of beauty filters is directly associated with the fear of negative evaluation, which has increased the usage of filters significantly (Destro). This shows that individuals who usually suffer from low self-esteem and have a higher fear of being judged by their peers are likely to use filters to change their appearances. This is strongly associated with editing pictures to make an individual look a certain way, and it was shown that editing photos was significantly and statistically related to appearance comparison and self-objectification (Mustafa and Akram). The cultivation of the ideology of altering appearances has significantly increased over the past few years and has had a direct impact on individual self-esteem. A study has also shown that using these filters is also known to have a positive correlation with the amount of time spent on Instagram, which shows that individuals are more likely to use Instagram if more beauty filters are being introduced and used however certain studies show that it is only limited to a certain age group and as age increases the fear of negative evaluation within individuals is likely to decrease and therefore it does not matter what feature is introduced by Instagram individuals will more likely use it for entertainment and social interactions and not be affected by the notion (Alfonso-Fuertes et al.).</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="filters"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></button>
+            <span class="count" data-count="filters">0 likes</span>
+            <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
+            <button class="bookmark" data-bookmark="filters" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
+          </div>
+          <div class="pager"><a class="btn-link" href="#intro" data-prev>← Back</a><a class="btn-link primary" href="#algorithmic" data-next>Next: Algorithmic Feed →</a></div>
+        </article>
+      </section>
+
+      <!-- 3) ALGORITHMIC FEEDS & SOCIAL COMPARISON -->
+      <section id="algorithmic" class="page" data-index="3" role="region" aria-label="Algorithmic Feeds">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-5),var(--ig-2));"></div>
+            <div class="meta"><span class="title">3) Algorithmic Feed Dynamics Amplify Social Comparison</span><span class="sub">#forYou #algorithm</span></div>
+          </div>
+          <figure data-like-surface>
+            <img alt="Scrolling phone" src="Assets/algorithmic.jpg" />
+            <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Algorithmic Feed Dynamics Amplify Social Comparison and Narrow Identity</h3>
+            <div class="content-slot" id="content-algorithmic">
+              <p>The Instagram algorithm is known to curate seeds according to the content that the user has interacted with or is commonly popular (Fouquaert and Mechant). The primary goal of the Instagram algorithm is to reinforce familiar content. However, over time, it has resulted in limiting diversity and self-representation by rewarding appearance-centric visuals. A psychology study conducted has shown that Instagram posts can be manipulated using an upward comparison or a downward comparison (Weber et al.). Upward comparison is commonly known to lead to significantly lower body esteem. However, unfortunately, it is the more commonly used form of algorithm building. Downward comparison has significantly shown to significantly increase body esteem and self-esteem of individuals; however, it is not as commonly used (Moreno-Padilla et al.). An eye tracking study was conducted to evaluate the visual attention that individuals gave to Instagram feeds, and it has shown that users are less likely to interact with posts that do not showcase a certain body type this shows that there is high levels of body dissatisfaction and body dysmorphia and shows that physical appearance comparison holds a great significance within the users it is likely to influence the overall exposure to content (Lindholm et al.). Teenagers are more likely to be influenced using filters and algorithms (Wiard et al.). A study showed that teens portray more negative appearance-related thoughts than adults and therefore are likely to rely greatly on these algorithmic recommendations, which often present weight loss options, beauty-related products, and eating disorders that will make them look a certain way (Harriger et al.). This can be correlated with the social comparison theory, which shows that exposure to idealized content can promote negative self-evaluation among audiences of a younger age (McComb et al.). While algorithms are commonly known as the “Instagram knows me” feature, it is playing an incredibly significant role in shaping the identities of individuals, especially of the younger age Instagram algorithm is known to promote idealized content, deliver appearance-focused content, and reinforce an upward comparison cycle within users Zhanna. While this may directly be associated with what the user engages with, it is still homogenizing self-deprecation and self-doubt.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="algorithmic"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Algorithmic Feed Dynamics Amplify Social Comparison and Narrow Identity</h3>
+            <div class="content-slot" id="content-algorithmic">
+              <p>The Instagram algorithm is known to curate seeds according to the content that the user has interacted with or is commonly popular (Fouquaert and Mechant). The primary goal of the Instagram algorithm is to reinforce familiar content. However, over time, it has resulted in limiting diversity and self-representation by rewarding appearance-centric visuals. A psychology study conducted has shown that Instagram posts can be manipulated using an upward comparison or a downward comparison (Weber et al.). Upward comparison is commonly known to lead to significantly lower body esteem. However, unfortunately, it is the more commonly used form of algorithm building. Downward comparison has significantly shown to significantly increase body esteem and self-esteem of individuals; however, it is not as commonly used (Moreno-Padilla et al.). An eye tracking study was conducted to evaluate the visual attention that individuals gave to Instagram feeds, and it has shown that users are less likely to interact with posts that do not showcase a certain body type this shows that there is high levels of body dissatisfaction and body dysmorphia and shows that physical appearance comparison holds a great significance within the users it is likely to influence the overall exposure to content (Lindholm et al.). Teenagers are more likely to be influenced using filters and algorithms (Wiard et al.). A study showed that teens portray more negative appearance-related thoughts than adults and therefore are likely to rely greatly on these algorithmic recommendations, which often present weight loss options, beauty-related products, and eating disorders that will make them look a certain way (Harriger et al.). This can be correlated with the social comparison theory, which shows that exposure to idealized content can promote negative self-evaluation among audiences of a younger age (McComb et al.). While algorithms are commonly known as the “Instagram knows me” feature, it is playing an incredibly significant role in shaping the identities of individuals, especially of the younger age Instagram algorithm is known to promote idealized content, deliver appearance-focused content, and reinforce an upward comparison cycle within users Zhanna. While this may directly be associated with what the user engages with, it is still homogenizing self-deprecation and self-doubt.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="algorithmic"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></button>
+            <span class="count" data-count="algorithmic">0 likes</span>
+            <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
+            <button class="bookmark" data-bookmark="algorithmic" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
+          </div>
+          <div class="pager"><a class="btn-link" href="#filters" data-prev>← Back</a><a class="btn-link primary" href="#feedback" data-next>Next: Feedback Loops →</a></div>
+        </article>
+      </section>
+
+      <!-- 4) FEEDBACK LOOPS & EXTERNAL VALIDATION -->
+      <section id="feedback" class="page" data-index="4" role="region" aria-label="Feedback Loops">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-4),var(--ig-1));"></div>
+            <div class="meta"><span class="title">4) Feedback Loops Reinforce External Validation</span><span class="sub">#likes #notifications</span></div>
+          </div>
+          <figure data-like-surface>
+            <img alt="Phone notifications" src="Assets/feedback.jpg" />
+            <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Feedback Loops Reinforce External Validation Over Intrinsic Self‑Worth</h3>
+            <div class="content-slot" id="content-feedback">
+              <p>Feedback loops can be defined by the likes, shares, and comments a person is likely to receive on their posts (Tenenboim). It is a mode of external validation and has become increasingly important in recent times. Posting on social media has become more than just connecting with individuals; evidence shows that people usually post on Instagram to reduce loneliness and feel a certain way about themselves (Jain et al.). However, the plethora of appearance-centric content and how it is rewarded with an individual's authentic identity is lost, and reliance on external validation has increased significantly (Seekis et al.). This can commonly be known as the feedback economy. These, like shares and comments, are known to have a significant and statistically positive impact on self-esteem and have been known to support a social feedback system that directly influences one's identity and social connections (Zulfianti et al.). This again is a problem found commonly in teenagers as they are more influenced by the number of likes and comments they receive on their posts. Self-esteem and self-worth are strongly associated with the number of likes and shares received on posts, especially for individuals who may be considered vulnerable users (Diefenbach and Anders). Experts show that modern dependency on likes and followers has turned external validation into currency and, therefore, is directly influencing the cycle of doubt and affirmation. Studies have shown that such systems are cultivating an environment of external validation as opposed to cultivating autonomy, competence, and related to internal validation. Studies have shown that the feedback economy is directly associated with increasing dependence on external validation as a primary source of self-worth (Schreurs et al.). It is known that images with filters and edits commonly receive more engagement and therefore reinforce this behavior within the one variable groups. As an individual who already has self-esteem issues dynamic is promoting compulsive posting of edited and filtered pictures is making individuals more pernicious and is causing their identity to be tied with metrics rather than authenticity.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="feedback"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></button>
+            <span class="count" data-count="feedback">0 likes</span>
+            <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
+            <button class="bookmark" data-bookmark="feedback" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
+          </div>
+          <div class="pager"><a class="btn-link" href="#algorithmic" data-prev>← Back</a><a class="btn-link primary" href="#psych" data-next>Next: Psychological Implications →</a></div>
+        </article>
+      </section>
+
+      <!-- 5) PSYCHOLOGICAL IMPLICATIONS -->
+      <section id="psych" class="page" data-index="5" role="region" aria-label="Psychological Implications">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-2),var(--ig-5));"></div>
+            <div class="meta"><span class="title">5) Psychological Implications</span><span class="sub">#affect #identity</span></div>
+          </div>
+          <figure data-like-surface>
+            <img alt="Abstract dopamine gradient" src="Assets/psyc.jpg" />
+            <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Psychological Implications</h3>
+            <div class="content-slot" id="content-psych">
+              <p>Mental health professionals are greatly encouraging digital literacy interventions for susceptible groups to encourage the responsible use of filters and recognize algorithmic bias (Chang et al.). This ultimately leads to a distorted self-perception; essentially, there is an increasing need for a social media detox due to the appearance-focused content commonly produced. Evidence has shown that reducing the use of Instagram and TikTok or taking a break for some time has a significant impact on body satisfaction and well-being in a positive light (Lambert et al.). Experts are labeling beauty filters as a mode of disabling transparency, and therefore are encouraging teenagers to reduce the subconscious internalization of unrealistic standards within teenagers.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="psych"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></button>
+            <span class="count" data-count="psych">0 likes</span>
+            <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
+            <button class="bookmark" data-bookmark="psych" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
+          </div>
+          <div class="pager"><a class="btn-link" href="#feedback" data-prev>← Back</a><a class="btn-link primary" href="#conclusion" data-next>Next: Conclusion →</a></div>
+        </article>
+      </section>
+
+      <!-- 6) CONCLUSION -->
+      <section id="conclusion" class="page" data-index="6" role="region" aria-label="Conclusion">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-1),var(--ig-5));"></div>
+            <div class="meta"><span class="title">6) Conclusion</span><span class="sub">#wrapUp #nextsteps</span></div>
+          </div>
+          <figure data-like-surface>
+            <img alt="Phone with Instagram profile" src="Assets/conclusion.jpg" />
+            <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
+          </figure>
+          <div class="body">
+            <h3>Conclusion</h3>
+            <div class="content-slot" id="content-conclusion">
+              <p>Instagram filters and algorithmic systems have been shown to exert a potent and interlocking influence on the identity and self-image of susceptible individuals. Filters were created as a mode of editing images but it is directly influencing individuals with low self-esteem to internalize narrow beauty ideals, promoting self-objectification, allowing individuals to engage in image editing, disrupting the appearance of self, and ultimately diminishing self-esteem further. Algorithmic curation is amplifying the focus on appearance related content, and is increasing social comparison between individuals which is further narrowing the visual and expressive diversity of the identity of individuals moreover this study discusses that engagement metrics like likes shares and follows are encouraging the use of these beauty filters to create a more aesthetically pleasing self-presentation even if it's untrue or unreliable. These engagement metrics also reinforce the need for external validation, especially among vulnerable users, and therefore are detrimental to the self-esteem and self-worth of individuals. These mechanisms are creating a self-reinforcing cycle, which is leading individuals with lower self-worth to rely greatly on Instagram filters to highlight an idealized presentation, is likely to receive greater feedback from peers, and is generating content broadly focused on appearances. This leads to diminishing self-image, and so the cycle continues repeatedly.</p>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="heart" aria-label="Like this section" data-heart="conclusion"><svg viewBox="0 0 24 24"><path class="fill" d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></button>
+            <span class="count" data-count="conclusion">0 likes</span>
+            <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
+            <button class="bookmark" data-bookmark="conclusion" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
+          </div>
+          <div class="pager"><a class="btn-link" href="#psych" data-prev>← Back</a><a class="btn-link primary" href="#cover" data-next>Back to Cover ↑</a></div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="nav" aria-label="Primary">
+      <button class="nav-btn" data-goto="#cover" title="Cover" aria-label="Cover"><svg class="icon" viewBox="0 0 24 24"><path d="M3 12 12 3l9 9v8H3v-8Z"/></svg></button>
+      <button class="nav-btn" data-goto="#intro" title="1" aria-label="Introduction"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/></svg></button>
+      <button class="nav-btn" data-goto="#filters" title="2" aria-label="Filters"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16M7 12h10M10 19h4"/></svg></button>
+      <button class="nav-btn" data-goto="#algorithmic" title="3" aria-label="Algorithmic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12h6l2 3 4-6 4 9"/></svg></button>
+      <button class="nav-btn" data-goto="#feedback" title="4" aria-label="Feedback"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21 4.5 13.5a5 5 0 1 1 7-7l.5.5.5-.5a5 5 0 1 1 7 7L12 21Z"/></svg></button>
+      <button class="nav-btn" data-goto="#psych" title="5" aria-label="Psych"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></button>
+      <button class="nav-btn" data-goto="#conclusion" title="6" aria-label="Conclusion"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Link copied!</div>
+
+  <script>
+    // Utility helpers
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    // Smooth navigation
+    $$('[data-next], [data-prev], [data-goto], .story').forEach(el=>{
+      el.addEventListener('click', e=>{
+        const href = el.getAttribute('href') || el.dataset.goto;
+        if(!href || !href.startsWith('#')) return;
+        e.preventDefault();
+        $(href)?.scrollIntoView({behavior:'smooth', block:'start'});
+        history.replaceState(null, '', href);
+      });
+    });
+
+    // Arrow key navigation
+    const ids=['#cover','#intro','#filters','#algorithmic','#feedback','#psych','#conclusion'];
+    window.addEventListener('keydown', e=>{
+      const i = Math.max(0, ids.indexOf(location.hash));
+      if(e.key==='ArrowRight'){ const n=Math.min(ids.length-1, i+1); $(ids[n])?.scrollIntoView({behavior:'smooth'}); }
+      if(e.key==='ArrowLeft'){ const p=Math.max(0, i-1); $(ids[p])?.scrollIntoView({behavior:'smooth'}); }
+    });
+
+    // Progress bar + active nav highlighting
+    const progress = $('#progressBar');
+    const navBtns = $$('footer.nav .nav-btn');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const idx = Number(entry.target.dataset.index||0);
+          const pct = (idx/(ids.length-1))*100; progress.style.width = pct+'%';
+          navBtns.forEach(btn=>btn.classList.remove('active'));
+          const activeBtn = navBtns.find(b=> (b.dataset.goto||'') === '#'+entry.target.id);
+          activeBtn?.classList.add('active');
+        }
+      });
+    },{threshold:.6});
+    ids.forEach(id=>{ const s=$(id); if(s) io.observe(s); });
+
+    // Likes with localStorage persistence
+    const LS_KEY='instaLikes';
+    const likeState = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+    function renderLikes(){
+      $$('[data-heart]').forEach(btn=>{
+        const key=btn.dataset.heart; const liked=!!likeState[key];
+        btn.classList.toggle('liked', liked);
+        const counter=$(`[data-count="${key}"]`); const n=Number(likeState[key]||0);
+        counter.textContent = `${n} like${n===1?'':'s'}`;
+      });
+    }
+    renderLikes();
+
+    $$('[data-heart]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const key=btn.dataset.heart; const current=Number(likeState[key]||0);
+        const liked=btn.classList.toggle('liked');
+        likeState[key]=liked? (current||0)+1 : Math.max(0,(current||0)-1);
+        localStorage.setItem(LS_KEY, JSON.stringify(likeState));
+        renderLikes();
+      });
+    });
+
+    // Double-tap to like on images
+    $$('figure[data-like-surface]').forEach(fig=>{
+      let last=0; const heart=fig.parentElement.querySelector('[data-heart]'); const flash=$('.dbl-like', fig);
+      fig.addEventListener('click',()=>{
+        const now=Date.now();
+        if(now-last < 250){ // double tap
+          heart?.click();
+          flash.style.opacity=1; setTimeout(()=> flash.style.opacity=0, 350);
+        }
+        last=now;
+      });
+    });
+
+    // Bookmark toggles (persist simple boolean)
+    const BS_KEY='instaBookmarks';
+    const bmState = JSON.parse(localStorage.getItem(BS_KEY) || '{}');
+    function renderBookmarks(){ $$('[data-bookmark]').forEach(b=> b.classList.toggle('saved', !!bmState[b.dataset.bookmark])); }
+    renderBookmarks();
+    $$('[data-bookmark]').forEach(b=> b.addEventListener('click',()=>{ const k=b.dataset.bookmark; bmState[k]=!bmState[k]; localStorage.setItem(BS_KEY, JSON.stringify(bmState)); renderBookmarks(); }));
+
+    // Share link (copy current hash)
+    const toast = $('#toast');
+    $$('[data-share]').forEach(btn=> btn.addEventListener('click', async()=>{
+      try{
+        const url = location.origin + location.pathname + (location.hash||'');
+        await navigator.clipboard.writeText(url);
+        toast.classList.add('show'); setTimeout(()=> toast.classList.remove('show'), 1200);
+      }catch(e){
+        alert('Copy failed. You can copy the URL from the address bar.');
+      }
+    }));
+
+    // --- SEARCH: type to find sections and jump ---
+    const searchInput = $('#searchInput');
+    const searchResults = $('#searchResults');
+    const cards = ids.slice(1).map(id => {
+      const sec = $(id);
+      const title = $('.meta .title', sec)?.textContent || $('h3', sec)?.textContent || id;
+      const text = ($('.content-slot', sec)?.textContent || '').toLowerCase();
+      return { id, title, text };
+    });
+
+    function updateResults(q){
+      const query = q.trim().toLowerCase();
+      searchResults.innerHTML = '';
+      if(query.length < 2){ searchResults.hidden = true; return; }
+
+      const matches = cards.map(c => {
+        let score = 0;
+        if(c.title.toLowerCase().includes(query)) score += 2;
+        if(c.text.includes(query)) score += 1;
+        return { ...c, score };
+      }).filter(m => m.score > 0)
+        .sort((a,b)=> b.score - a.score)
+        .slice(0,6);
+
+      if(matches.length === 0){
+        searchResults.innerHTML = '<div class="result-empty">No matches</div>';
+        searchResults.hidden = false;
+        return;
+      }
+
+      matches.forEach((m,i)=>{
+        const btn = document.createElement('button');
+        btn.type='button';
+        btn.className='result-item';
+        btn.setAttribute('role','option');
+        btn.dataset.goto = m.id;
+        btn.innerHTML = `<div class="result-title">${m.title}</div><div class="result-sub">${m.id.slice(1)}</div>`;
+        btn.addEventListener('click', ()=> navigateTo(m.id));
+        searchResults.appendChild(btn);
+      });
+      searchResults.hidden = false;
+    }
+
+    function navigateTo(id){
+      $(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null,'',id);
+      searchResults.hidden = true;
+      // brief highlight
+      const post = $(`${id} .post`);
+      if(post){ post.classList.add('glow'); setTimeout(()=> post.classList.remove('glow'), 900); }
+    }
+
+    if(searchInput){
+      searchInput.addEventListener('input', e => updateResults(e.target.value));
+      searchInput.addEventListener('keydown', e => {
+        if(e.key === 'Enter'){
+          const first = searchResults.querySelector('.result-item');
+          if(first){ first.click(); }
+        }else if(e.key === 'Escape'){
+          searchResults.hidden = true; searchInput.blur();
+        }
+      });
+      // Hide results when clicking elsewhere
+      document.addEventListener('click', (e)=>{
+        if(!searchResults.contains(e.target) && e.target !== searchInput){
+          searchResults.hidden = true;
+        }
+      });
+    }
+
+    // Default to cover on load
+    if(!location.hash) location.hash='#cover';
+  </script>
+</body>
+</html>
+
