@@ -16,14 +16,12 @@
     html,body{height:100%}
     body{margin:0;background:radial-gradient(1200px 1200px at 80% -10%,var(--ig-5),transparent 60%),radial-gradient(1000px 800px at -10% 110%,var(--ig-2),transparent 60%),var(--bg);color:var(--text);font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 
-    /* App shell */
     .app{max-width:980px;margin:0 auto;min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
     header{position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);background:rgba(10,10,16,.6);border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:10px 14px}
     .brand{display:flex;align-items:center;gap:10px}
     .wordmark{font-family:'Pacifico',cursive;font-size:26px;letter-spacing:.3px;background:linear-gradient(90deg,var(--ig-1),var(--ig-2),var(--ig-3),var(--ig-4),var(--ig-5));-webkit-background-clip:text;background-clip:text;color:transparent}
     .search{justify-self:center;width:42%; position:relative;}
     .search input{width:100%;background:#0f1016;border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:10px;outline:none}
-    /* Search results dropdown */
     .results{position:absolute;top:44px;left:0;width:100%;background:#0f1016;border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:6px;max-height:260px;overflow:auto}
     .result-item{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border-radius:10px;background:transparent;border:0;color:#e8e9f0;text-align:left;cursor:pointer}
     .result-item:hover,.result-item[aria-selected="true"]{background:#151621}
@@ -35,26 +33,22 @@
     .icon-btn{background:transparent;border:0;cursor:pointer;padding:6px}
     .icon{width:22px;height:22px;fill:none;stroke:#e6e6ea;stroke-width:2}
 
-    /* Stories */
     .stories{display:flex;gap:12px;padding:12px 16px;overflow-x:auto;border-bottom:1px solid var(--border);background:#0c0d14}
     .story{width:72px;text-align:center;font-size:12px;color:#c9c9d2;background:transparent;border:0;cursor:pointer}
     .ring{width:64px;height:64px;margin:0 auto 6px;border-radius:50%;padding:3px;background:conic-gradient(var(--ig-1),var(--ig-2),var(--ig-3),var(--ig-4),var(--ig-5),var(--ig-1))}
     .ring img{width:100%;height:100%;border-radius:50%;display:block;border:2px solid #0c0d14;object-fit:cover}
 
-    /* Progress bar */
     .progress{position:sticky;top:58px;z-index:19;height:3px;background:#0c0d14;border-bottom:1px solid var(--border)}
     .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--ig-3),var(--ig-4),var(--ig-5))}
 
-    /* Pages */
     main{position:relative}
     .page{min-height:calc(100vh - 160px);display:grid;grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:16px;padding:16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
 
     .cover{place-items:center;text-align:center;padding:10vh 16px;border:0;background:radial-gradient(800px 500px at 20% 0%,rgba(255,255,255,.06),transparent 60%),linear-gradient(135deg,var(--ig-5),var(--ig-4) 30%,var(--ig-3) 55%,var(--ig-2) 80%,var(--ig-1));color:#fff}
-    .cover h1{font-family:'Pacifico',cursive;font-size:clamp(48px,8vw,86px);margin:0 0 10px}
+    .cover h1{font-family:'Pacifico',cursive;font-size:clamp(40px,5.5vw,64px);margin:0 0 10px}
     .cover h2{font-size:clamp(16px,2.5vw,24px);font-weight:400;opacity:.95;margin:0 0 24px}
     .cta .btn{appearance:none;border:0;cursor:pointer;color:#fff;font-weight:600;padding:12px 18px;border-radius:12px;font-size:16px;background:linear-gradient(90deg,var(--ig-1),var(--ig-2),var(--ig-3),var(--ig-4),var(--ig-5));box-shadow:0 8px 28px rgba(214,44,121,.35)}
 
-    /* Post card */
     .post{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 6px 28px rgba(0,0,0,.25); transition: box-shadow .3s ease;}
     .post.glow{box-shadow:0 0 0 2px rgba(214,44,121,.6), 0 8px 28px rgba(214,44,121,.35)}
     .post .post-head{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--border);background:#0f1016}
@@ -70,7 +64,6 @@
 
     .body{padding:12px 14px 6px;color:#dfe0e7}
     .body h3{margin:0 0 6px;font-size:18px}
-    .placeholder{color:#9ea1ac;font-size:14px}
     .content-slot{border:1px dashed #3a3b4a;border-radius:10px;padding:10px;margin-top:8px;background:#0f1016}
     .content-slot p{margin:.5em 0}
 
@@ -91,7 +84,6 @@
     .nav-btn{background:transparent;border:0;cursor:pointer}
     .nav-btn.active .icon{stroke:url(#igGrad)}
 
-    /* Toast */
     .toast{position:fixed;bottom:18px;right:18px;background:#111218;border:1px solid var(--border);color:#fff;padding:10px 14px;border-radius:12px;opacity:0;transform:translateY(8px);transition:all .25s ease;pointer-events:none}
     .toast.show{opacity:1;transform:translateY(0)}
 
@@ -127,6 +119,7 @@
       <button class="story" data-goto="#feedback"><div class="ring"><img alt="Feedback" src="Assets/feedback.jpg"/></div>feedback</button>
       <button class="story" data-goto="#psych"><div class="ring"><img alt="Psych" src="Assets/psyc.jpg"/></div>psych</button>
       <button class="story" data-goto="#conclusion"><div class="ring"><img alt="Conclusion" src="Assets/conclusion.jpg"/></div>conclusion</button>
+      <button class="story" data-goto="#references"><div class="ring"><img alt="References" src="Assets/conclusion.jpg"/></div>refs</button>
     </div>
 
     <div class="progress" aria-hidden="true"><div class="bar" id="progressBar"></div></div>
@@ -135,10 +128,8 @@
       <!-- 0) COVER PAGE -->
       <section id="cover" class="page cover" data-index="0" role="region" aria-label="Cover">
         <div>
-          <h1>Hamza Aheed</h1>
-          <h2>FILM 260 Assignment</h2>
-          <p style="max-width:680px;margin:0 auto;opacity:.92">Hamza Aheed logging into Film 260</p>
-          <div class="cta"><button class="btn" data-next>Login..</button></div>
+          <h1>The Impact of Instagram’s Algorithms and Filters on Identity and Self-Image</h1>
+          <div class="cta"><button class="btn" data-next>Hamza Aheed logging in</button></div>
         </div>
       </section>
 
@@ -235,7 +226,7 @@
             <div class="dbl-like" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.1 8.64 12 8.77l-.11-.13C9.14 5.6 4.6 6.28 3.28 9.5 2.5 11.36 3.1 13.7 5 15.1L12 21l7-5.9c1.9-1.4 2.5-3.73 1.72-5.6-1.32-3.22-5.86-3.9-8.62-.86Z"/></svg></div>
           </figure>
           <div class="body">
-            <h3>Feedback Loops Reinforce External Validation Over Intrinsic Self‑Worth</h3>
+            <h3>Feedback Loops Reinforce External Validation Over Intrinsic Self-Worth</h3>
             <div class="content-slot" id="content-feedback">
               <p>Feedback loops can be defined by the likes, shares, and comments a person is likely to receive on their posts (Tenenboim). It is a mode of external validation and has become increasingly important in recent times. Posting on social media has become more than just connecting with individuals; evidence shows that people usually post on Instagram to reduce loneliness and feel a certain way about themselves (Jain et al.). However, the plethora of appearance-centric content and how it is rewarded with an individual's authentic identity is lost, and reliance on external validation has increased significantly (Seekis et al.). This can commonly be known as the feedback economy. These, like shares and comments, are known to have a significant and statistically positive impact on self-esteem and have been known to support a social feedback system that directly influences one's identity and social connections (Zulfianti et al.). This again is a problem found commonly in teenagers as they are more influenced by the number of likes and comments they receive on their posts. Self-esteem and self-worth are strongly associated with the number of likes and shares received on posts, especially for individuals who may be considered vulnerable users (Diefenbach and Anders). Experts show that modern dependency on likes and followers has turned external validation into currency and, therefore, is directly influencing the cycle of doubt and affirmation. Studies have shown that such systems are cultivating an environment of external validation as opposed to cultivating autonomy, competence, and related to internal validation. Studies have shown that the feedback economy is directly associated with increasing dependence on external validation as a primary source of self-worth (Schreurs et al.). It is known that images with filters and edits commonly receive more engagement and therefore reinforce this behavior within the one variable groups. As an individual who already has self-esteem issues dynamic is promoting compulsive posting of edited and filtered pictures is making individuals more pernicious and is causing their identity to be tied with metrics rather than authenticity.</p>
             </div>
@@ -300,7 +291,52 @@
             <button class="share" data-share title="Copy link"><svg viewBox="0 0 24 24"><path class="fill" d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path class="fill" d="M12 16V4"/><path class="fill" d="M7 8l5-4 5 4"/></svg></button>
             <button class="bookmark" data-bookmark="conclusion" title="Save"><svg viewBox="0 0 24 24"><path class="fill" d="M6 3h12v18l-6-3-6 3V3Z"/></svg></button>
           </div>
-          <div class="pager"><a class="btn-link" href="#psych" data-prev>← Back</a><a class="btn-link primary" href="#cover" data-next>Back to Cover ↑</a></div>
+          <div class="pager"><a class="btn-link" href="#psych" data-prev>← Back</a><a class="btn-link primary" href="#references" data-next>Next: References →</a></div>
+        </article>
+      </section>
+
+      <!-- 7) REFERENCES -->
+      <section id="references" class="page" data-index="7" role="region" aria-label="References">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar" style="background-image:linear-gradient(135deg,var(--ig-3),var(--ig-5));"></div>
+            <div class="meta"><span class="title">References</span><span class="sub">#sources #citations</span></div>
+          </div>
+          <figure><img alt="Abstract gradient" src="Assets/conclusion.jpg"/></figure>
+          <div class="body">
+            <h3>References</h3>
+            <div class="content-slot" id="content-refs" style="font-size:14px; line-height:1.55">
+              <p>Alfonso-Fuertes, Isabel, et al. (2022). <em>JMIR Formative Research</em>. <a href="https://doi.org/10.2196/42207" target="_blank" rel="noopener">https://doi.org/10.2196/42207</a></p>
+              <p>Castillo-Hermosilla, Mariana P., et al. (2024). In LNICST. <a href="https://doi.org/10.1007/978-3-031-71304-0_8" target="_blank" rel="noopener">https://doi.org/10.1007/978-3-031-71304-0_8</a></p>
+              <p>Chang, Jane Pei-Chen, et al. (2025). <em>AI</em>. <a href="https://doi.org/10.3390/ai6060118" target="_blank" rel="noopener">https://doi.org/10.3390/ai6060118</a></p>
+              <p>Creedon, Pamela J., &amp; Wackwitz, Laura A. (2022). <em>Women in Mass Communication</em>. Taylor &amp; Francis.</p>
+              <p>Destro, Calogero Lo. (2024). <em>Frontiers in Psychology</em>. <a href="https://doi.org/10.3389/fpsyg.2024.1302662" target="_blank" rel="noopener">https://doi.org/10.3389/fpsyg.2024.1302662</a></p>
+              <p>Diefenbach, Sarah, &amp; Anders, Laura. (2021). <em>Psychology of Popular Media</em>. <a href="https://doi.org/10.1037/ppm0000360" target="_blank" rel="noopener">https://doi.org/10.1037/ppm0000360</a></p>
+              <p>Evens, Ornella, et al. (2021). <em>Body Image</em>. <a href="https://doi.org/10.1016/j.bodyim.2021.06.002" target="_blank" rel="noopener">https://doi.org/10.1016/j.bodyim.2021.06.002</a></p>
+              <p>Fouquaert, Thibault, &amp; Mechant, Peter. (2021). <em>Information, Communication &amp; Society</em>. <a href="https://doi.org/10.1080/1369118x.2021.1883707" target="_blank" rel="noopener">https://doi.org/10.1080/1369118x.2021.1883707</a></p>
+              <p>Harriger, Jennifer A., et al. (2022). <em>Body Image</em>. <a href="https://doi.org/10.1016/j.bodyim.2022.03.007" target="_blank" rel="noopener">https://doi.org/10.1016/j.bodyim.2022.03.007</a></p>
+              <p>Isakowitsch, Clara. (2023). CCIS. <a href="https://doi.org/10.1007/978-3-031-26438-2_19" target="_blank" rel="noopener">https://doi.org/10.1007/978-3-031-26438-2_19</a></p>
+              <p>Jain, Ankit Kumar, et al. (2021). <em>Complex &amp; Intelligent Systems</em>. <a href="https://doi.org/10.1007/s40747-021-00409-7" target="_blank" rel="noopener">https://doi.org/10.1007/s40747-021-00409-7</a></p>
+              <p>Lambert, Jeffrey, et al. (2022). <em>Cyberpsychology, Behavior, and Social Networking</em>. <a href="https://doi.org/10.1089/cyber.2021.0324" target="_blank" rel="noopener">https://doi.org/10.1089/cyber.2021.0324</a></p>
+              <p>Lindholm, Jenny, et al. (2020). <em>The International Journal of Press/Politics</em>. <a href="https://doi.org/10.1177/1940161220937239" target="_blank" rel="noopener">https://doi.org/10.1177/1940161220937239</a></p>
+              <p>Lukoševičiūtė-Barauskienė, Justė, et al. (2023). <em>Children</em>. <a href="https://doi.org/10.3390/children10071109" target="_blank" rel="noopener">https://doi.org/10.3390/children10071109</a></p>
+              <p>Ma, Ying, et al. (2024). <em>Proceedings of the ACM on HCI</em>. <a href="https://doi.org/10.1145/3676529" target="_blank" rel="noopener">https://doi.org/10.1145/3676529</a></p>
+              <p>Mancin, Paolo, et al. (2023). <em>Current Psychology</em>. <a href="https://doi.org/10.1007/s12144-023-05204-w" target="_blank" rel="noopener">https://doi.org/10.1007/s12144-023-05204-w</a></p>
+              <p>McComb, Carly A., et al. (2023). <em>Media Psychology</em>. <a href="https://doi.org/10.1080/15213269.2023.2180647" target="_blank" rel="noopener">https://doi.org/10.1080/15213269.2023.2180647</a></p>
+              <p>Moreno-Padilla, María, et al. (2025). <em>Cyberpsychology</em>. <a href="https://doi.org/10.5817/cp2025-2-2" target="_blank" rel="noopener">https://doi.org/10.5817/cp2025-2-2</a></p>
+              <p>Mustafa, Sarah, &amp; Akram, Mariyam. (2022). <em>Human Behavior and Emerging Technologies</em>. <a href="https://doi.org/10.1155/2022/6609752" target="_blank" rel="noopener">https://doi.org/10.1155/2022/6609752</a></p>
+              <p>Ozimek, Phillip, et al. (2023). <em>BMC Psychology</em>. <a href="https://doi.org/10.1186/s40359-023-01143-0" target="_blank" rel="noopener">https://doi.org/10.1186/s40359-023-01143-0</a></p>
+              <p>Sándor, Alexandra Valéria. (2023). Doctoral thesis. <a href="https://doi.org/10.15476/elte.2023.118" target="_blank" rel="noopener">https://doi.org/10.15476/elte.2023.118</a></p>
+              <p>Schreurs, Lara, et al. (2024). <em>Communication Research</em>. <a href="https://doi.org/10.1177/00936502241233787" target="_blank" rel="noopener">https://doi.org/10.1177/00936502241233787</a></p>
+              <p>Seekis, Veya, et al. (2025). <em>Body Image</em>. <a href="https://doi.org/10.1016/j.bodyim.2024.101849" target="_blank" rel="noopener">https://doi.org/10.1016/j.bodyim.2024.101849</a></p>
+              <p>Smith, Rosanna, et al. (2024). SSRN. <a href="https://doi.org/10.2139/ssrn.4964322" target="_blank" rel="noopener">https://doi.org/10.2139/ssrn.4964322</a></p>
+              <p>Tenenboim, Ori. (2022). <em>Social Media + Society</em>. <a href="https://doi.org/10.1177/20563051221130282" target="_blank" rel="noopener">https://doi.org/10.1177/20563051221130282</a></p>
+              <p>Weber, Silvana, et al. (2021). <em>Media Psychology</em>. <a href="https://doi.org/10.1080/15213269.2021.1968440" target="_blank" rel="noopener">https://doi.org/10.1080/15213269.2021.1968440</a></p>
+              <p>Wiard, Victor, et al. (2022). <em>Frontiers in Communication</em>. <a href="https://doi.org/10.3389/fcomm.2022.778273" target="_blank" rel="noopener">https://doi.org/10.3389/fcomm.2022.778273</a></p>
+              <p>Zulfianti, Inayah, et al. (2024). <em>Journal La Sociale</em>. <a href="https://doi.org/10.37899/journal-la-sociale.v4i5.1951" target="_blank" rel="noopener">https://doi.org/10.37899/journal-la-sociale.v4i5.1951</a></p>
+            </div>
+          </div>
+          <div class="pager"><a class="btn-link" href="#conclusion" data-prev>← Back</a><a class="btn-link primary" href="#cover" data-next>Back to Cover ↑</a></div>
         </article>
       </section>
     </main>
@@ -313,17 +349,16 @@
       <button class="nav-btn" data-goto="#feedback" title="4" aria-label="Feedback"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21 4.5 13.5a5 5 0 1 1 7-7l.5.5.5-.5a5 5 0 1 1 7 7L12 21Z"/></svg></button>
       <button class="nav-btn" data-goto="#psych" title="5" aria-label="Psych"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></button>
       <button class="nav-btn" data-goto="#conclusion" title="6" aria-label="Conclusion"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button>
+      <button class="nav-btn" data-goto="#references" title="Refs" aria-label="References"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </footer>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite">Link copied!</div>
 
   <script>
-    // Utility helpers
     const $ = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-    // Smooth navigation
     $$('[data-next], [data-prev], [data-goto], .story').forEach(el=>{
       el.addEventListener('click', e=>{
         const href = el.getAttribute('href') || el.dataset.goto;
@@ -334,15 +369,13 @@
       });
     });
 
-    // Arrow key navigation
-    const ids=['#cover','#intro','#filters','#algorithmic','#feedback','#psych','#conclusion'];
+    const ids=['#cover','#intro','#filters','#algorithmic','#feedback','#psych','#conclusion','#references'];
     window.addEventListener('keydown', e=>{
       const i = Math.max(0, ids.indexOf(location.hash));
       if(e.key==='ArrowRight'){ const n=Math.min(ids.length-1, i+1); $(ids[n])?.scrollIntoView({behavior:'smooth'}); }
       if(e.key==='ArrowLeft'){ const p=Math.max(0, i-1); $(ids[p])?.scrollIntoView({behavior:'smooth'}); }
     });
 
-    // Progress bar + active nav highlighting
     const progress = $('#progressBar');
     const navBtns = $$('footer.nav .nav-btn');
     const io = new IntersectionObserver((entries)=>{
@@ -358,7 +391,6 @@
     },{threshold:.6});
     ids.forEach(id=>{ const s=$(id); if(s) io.observe(s); });
 
-    // Likes with localStorage persistence
     const LS_KEY='instaLikes';
     const likeState = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
     function renderLikes(){
@@ -366,7 +398,7 @@
         const key=btn.dataset.heart; const liked=!!likeState[key];
         btn.classList.toggle('liked', liked);
         const counter=$(`[data-count="${key}"]`); const n=Number(likeState[key]||0);
-        counter.textContent = `${n} like${n===1?'':'s'}`;
+        if(counter) counter.textContent = `${n} like${n===1?'':'s'}`;
       });
     }
     renderLikes();
@@ -381,27 +413,21 @@
       });
     });
 
-    // Double-tap to like on images
     $$('figure[data-like-surface]').forEach(fig=>{
       let last=0; const heart=fig.parentElement.querySelector('[data-heart]'); const flash=$('.dbl-like', fig);
       fig.addEventListener('click',()=>{
         const now=Date.now();
-        if(now-last < 250){ // double tap
-          heart?.click();
-          flash.style.opacity=1; setTimeout(()=> flash.style.opacity=0, 350);
-        }
+        if(now-last < 250){ heart?.click(); if(flash){ flash.style.opacity=1; setTimeout(()=> flash.style.opacity=0, 350);} }
         last=now;
       });
     });
 
-    // Bookmark toggles (persist simple boolean)
     const BS_KEY='instaBookmarks';
     const bmState = JSON.parse(localStorage.getItem(BS_KEY) || '{}');
     function renderBookmarks(){ $$('[data-bookmark]').forEach(b=> b.classList.toggle('saved', !!bmState[b.dataset.bookmark])); }
     renderBookmarks();
     $$('[data-bookmark]').forEach(b=> b.addEventListener('click',()=>{ const k=b.dataset.bookmark; bmState[k]=!bmState[k]; localStorage.setItem(BS_KEY, JSON.stringify(bmState)); renderBookmarks(); }));
 
-    // Share link (copy current hash)
     const toast = $('#toast');
     $$('[data-share]').forEach(btn=> btn.addEventListener('click', async()=>{
       try{
@@ -413,7 +439,7 @@
       }
     }));
 
-    // --- SEARCH: type to find sections and jump ---
+    // SEARCH
     const searchInput = $('#searchInput');
     const searchResults = $('#searchResults');
     const cards = ids.slice(1).map(id => {
@@ -427,63 +453,42 @@
       const query = q.trim().toLowerCase();
       searchResults.innerHTML = '';
       if(query.length < 2){ searchResults.hidden = true; return; }
-
       const matches = cards.map(c => {
         let score = 0;
         if(c.title.toLowerCase().includes(query)) score += 2;
         if(c.text.includes(query)) score += 1;
         return { ...c, score };
-      }).filter(m => m.score > 0)
-        .sort((a,b)=> b.score - a.score)
-        .slice(0,6);
-
+      }).filter(m => m.score > 0).sort((a,b)=> b.score - a.score).slice(0,6);
       if(matches.length === 0){
         searchResults.innerHTML = '<div class="result-empty">No matches</div>';
-        searchResults.hidden = false;
-        return;
+        searchResults.hidden = false; return;
       }
-
-      matches.forEach((m,i)=>{
+      matches.forEach(m=>{
         const btn = document.createElement('button');
-        btn.type='button';
-        btn.className='result-item';
-        btn.setAttribute('role','option');
-        btn.dataset.goto = m.id;
+        btn.type='button'; btn.className='result-item'; btn.setAttribute('role','option'); btn.dataset.goto = m.id;
         btn.innerHTML = `<div class="result-title">${m.title}</div><div class="result-sub">${m.id.slice(1)}</div>`;
         btn.addEventListener('click', ()=> navigateTo(m.id));
         searchResults.appendChild(btn);
       });
       searchResults.hidden = false;
     }
-
     function navigateTo(id){
       $(id)?.scrollIntoView({behavior:'smooth', block:'start'});
       history.replaceState(null,'',id);
       searchResults.hidden = true;
-      // brief highlight
-      const post = $(`${id} .post`);
-      if(post){ post.classList.add('glow'); setTimeout(()=> post.classList.remove('glow'), 900); }
+      const post = $(`${id} .post`); if(post){ post.classList.add('glow'); setTimeout(()=> post.classList.remove('glow'), 900); }
     }
-
     if(searchInput){
       searchInput.addEventListener('input', e => updateResults(e.target.value));
       searchInput.addEventListener('keydown', e => {
-        if(e.key === 'Enter'){
-          const first = searchResults.querySelector('.result-item');
-          if(first){ first.click(); }
-        }else if(e.key === 'Escape'){
-          searchResults.hidden = true; searchInput.blur();
-        }
+        if(e.key === 'Enter'){ const first = searchResults.querySelector('.result-item'); if(first){ first.click(); } }
+        else if(e.key === 'Escape'){ searchResults.hidden = true; searchInput.blur(); }
       });
-      // Hide results when clicking elsewhere
       document.addEventListener('click', (e)=>{
-        if(!searchResults.contains(e.target) && e.target !== searchInput){
-          searchResults.hidden = true;
-        }
+        if(!searchResults.contains(e.target) && e.target !== searchInput){ searchResults.hidden = true; }
       });
     }
 
-    // Default to cover on load
     if(!location.hash) location.hash='#cover';
   </script>
 </body>
